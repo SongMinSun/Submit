@@ -57,7 +57,7 @@ public class JavaGUICompiler extends JFrame {
 	 * Create the application.
 	 */
 	public JavaGUICompiler() {
-		this.setTitle("ÀÚ¹Ù ÄÄÆÄÀÏ·¯");
+		this.setTitle("ìë°” ì»´íŒŒì¼ëŸ¬");
 		this.setSize(500,500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
