@@ -59,14 +59,40 @@ public class JavaGUICompiler extends JFrame {
 		this.setSize(500,500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		CreateMenuBar();
+		CreateTextField();
 		this.setVisible(true);
-		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+public void CreateMenuBar() {
+
+		
+		mb.add(fileMenu);
+		mb.add(compileMenu);
+		mb.add(editMenu);
+
+		fileMenu.add(NewMenu);
+		fileMenu.add(OpenMenu);
+		fileMenu.add(SaveMenu);
+		fileMenu.add(EditMenu);
+
+		editMenu.add(CopyMenu);
+		editMenu.add(PasteMenu);
+		editMenu.add(CutMenu);
+		
+		compileMenu.add(CompileMenu);
+		compileMenu.add(RunMenu);
+		
+		this.setJMenuBar(mb);
 	}
+
+public void CreateTextField() {
+	JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollTf1, scrollTf2);
+	splitPane.setResizeWeight(0.5);
+	add(splitPane);
+}
 
 }
