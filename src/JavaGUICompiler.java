@@ -76,8 +76,9 @@ public class JavaGUICompiler extends JFrame {
 
 			//		메뉴바 추가
 			mb.add(fileMenu);
-			mb.add(compileMenu);
 			mb.add(editMenu);
+			mb.add(compileMenu);
+			
 		
 			//		파일 메뉴바 메뉴아이템 추가
 			fileMenu.add(NewMenu);
@@ -94,8 +95,6 @@ public class JavaGUICompiler extends JFrame {
 			compileMenu.add(CompileMenu);
 			compileMenu.add(RunMenu);
 		
-			this.setJMenuBar(mb);
-		
 		NewMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tf1.setText("");
@@ -103,6 +102,7 @@ public class JavaGUICompiler extends JFrame {
 			}
 		});
 		
+//		Open메뉴 이벤트 처리
 		OpenMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chooser = new JFileChooser();
@@ -129,11 +129,27 @@ public class JavaGUICompiler extends JFrame {
 			}
 		});
 		
+//		Save 메뉴 이벤트 처리
 		SaveMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+//				상동
+				chooser = new JFileChooser();
+				chooser.setDialogTitle("Save");
+				int ret = chooser.showOpenDialog(null);
+				if(ret != JFileChooser.APPROVE_OPTION) {
+					JOptionPane.showMessageDialog(null, "파일을 선택하지 않았습니다.", "경고!", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+//				txt 파일로 윗부분 텍스트입력 부분 입력된 문자 저장
+				try(FileWriter fw = new FileWriter(chooser.getSelectedFile()+".txt")) {
+				    tf1.write(fw);
+				    fw.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
 			}
 		});
+		
 		ExitMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -162,11 +178,10 @@ public class JavaGUICompiler extends JFrame {
 		});
 		RunMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 			}
 		});
-		this.setJMenuBar(mb);
 		
+		this.setJMenuBar(mb);
 	}
 	
 	public void CreateTextField() {
