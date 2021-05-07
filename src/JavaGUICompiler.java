@@ -55,6 +55,11 @@ public class JavaGUICompiler extends JFrame {
 	 * Create the application.
 	 */
 	public JavaGUICompiler() {
+		this.setTitle("자바 컴파일러");
+		this.setSize(500,500);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		this.setVisible(true);
 		initialize();
 	}
 
