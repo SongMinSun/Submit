@@ -26,11 +26,13 @@ public class JavaGUICompiler extends JFrame {
 	JScrollPane scrollTf1 = new JScrollPane(tf1);
 	JScrollPane scrollTf2 = new JScrollPane(tf2);
 	
+//	메뉴바
 	JMenuBar mb = new JMenuBar();
 	JMenu fileMenu = new JMenu("File");
 	JMenu editMenu = new JMenu("Edit");
 	JMenu compileMenu = new JMenu("Compile");
 
+//	메뉴바 - 메뉴 아이템
 	JFileChooser chooser;
 	JMenuItem NewMenu = new JMenuItem("New");
 	JMenuItem OpenMenu = new JMenuItem("Open");
@@ -59,34 +61,40 @@ public class JavaGUICompiler extends JFrame {
 		this.setSize(500,500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+
+//		메뉴바 생성 메소드
 		CreateMenuBar();
+//		텍스크 구역 생성 메소드
 		CreateTextField();
 		this.setVisible(true);
-		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-	}
-	
 	public void CreateMenuBar() {
-		mb.add(fileMenu);
-		mb.add(editMenu);
-		mb.add(compileMenu);
+
+			//		메뉴바 추가
+			mb.add(fileMenu);
+			mb.add(compileMenu);
+			mb.add(editMenu);
 		
-		fileMenu.add(NewMenu);
-		fileMenu.add(OpenMenu);
-		fileMenu.add(SaveMenu);
-		fileMenu.add(ExitMenu);
+			//		파일 메뉴바 메뉴아이템 추가
+			fileMenu.add(NewMenu);
+			fileMenu.add(OpenMenu);
+			fileMenu.add(SaveMenu);
+			fileMenu.add(ExitMenu);
+
+			//		수정 메뉴바 메뉴아이템 추가
+			editMenu.add(CopyMenu);
+			editMenu.add(PasteMenu);
+			editMenu.add(CutMenu);
 		
-		editMenu.add(CopyMenu);
-		editMenu.add(PasteMenu);
-		editMenu.add(CutMenu);
+			//		컴파일 메뉴바 메뉴 아이템 추가
+			compileMenu.add(CompileMenu);
+			compileMenu.add(RunMenu);
 		
-		compileMenu.add(CompileMenu);
-		compileMenu.add(RunMenu);
+			this.setJMenuBar(mb);
 		
 		NewMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -162,9 +170,10 @@ public class JavaGUICompiler extends JFrame {
 	}
 	
 	public void CreateTextField() {
+		//	수평 1:1 텍스트-스크롤패널 분할 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollTf1, scrollTf2);
 		splitPane.setResizeWeight(0.5);
-		getContentPane().add(splitPane);
+		add(splitPane);
 	}
 
-}
+	}
