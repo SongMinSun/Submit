@@ -73,28 +73,29 @@ public class JavaGUICompiler extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	public void CreateMenuBar() {
+		
+		//		메뉴바 추가
+		mb.add(fileMenu);
+		mb.add(editMenu);
+		mb.add(compileMenu);
+		
+		//		파일 메뉴바 메뉴아이템 추가
+		fileMenu.add(NewMenu);
+		fileMenu.add(OpenMenu);
+		fileMenu.add(SaveMenu);
+		fileMenu.add(ExitMenu);
+		
 
-			//		메뉴바 추가
-			mb.add(fileMenu);
-			mb.add(editMenu);
-			mb.add(compileMenu);
-			
+		//		수정 메뉴바 메뉴아이템 추가
+		editMenu.add(CopyMenu);
+		editMenu.add(PasteMenu);
+		editMenu.add(CutMenu);
 		
-			//		파일 메뉴바 메뉴아이템 추가
-			fileMenu.add(NewMenu);
-			fileMenu.add(OpenMenu);
-			fileMenu.add(SaveMenu);
-			fileMenu.add(ExitMenu);
-
-			//		수정 메뉴바 메뉴아이템 추가
-			editMenu.add(CopyMenu);
-			editMenu.add(PasteMenu);
-			editMenu.add(CutMenu);
+		//		컴파일 메뉴바 메뉴 아이템 추가
+		compileMenu.add(CompileMenu);
+		compileMenu.add(RunMenu);
 		
-			//		컴파일 메뉴바 메뉴 아이템 추가
-			compileMenu.add(CompileMenu);
-			compileMenu.add(RunMenu);
-		
+//		new메뉴 이벤트 처리
 		NewMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tf1.setText("");
@@ -149,21 +150,55 @@ public class JavaGUICompiler extends JFrame {
 				}
 			}
 		});
-		
+
+//		Exit메뉴 이벤트 처리(오류 남)
 		ExitMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				chooser = new JFileChooser();
+				chooser.setDialogTitle("Save");
+				chooser.setDialogTitle("Exit");
+				int retval = chooser.showOpenDialog(null);
+				if(retval != JFileChooser.APPROVE_OPTION) {
+					JOptionPane.showMessageDialog(null, "파일을 선택하지 않았음.","경고",JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				File file = null;
+				if(retval == JFileChooser.APPROVE_OPTION) {    
+				  file = chooser.getSelectedFile();    
+				}
+				BufferedReader in;
+				try {
+				in = new BufferedReader(new FileReader(file));
+				String line = in.readLine();
+				while(line != null){
+				  tf1.append(line + "\n");
+				  line = in.readLine();
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				}
 			}
 		});
 		
+//		Copy메뉴 이벤트 추가
 		CopyMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				StringSelection stringSelection = new StringSelection (tf1.getText());
+				c = Toolkit.getDefaultToolkit().getSystemClipboard();
+				c.setContents(stringSelection, null);				
 			}
 		});
+//		Paste메뉴 이벤트 추가
 		PasteMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				c = Toolkit.getDefaultToolkit().getSystemClipboard();
+				Transferable text = c.getContents(this);
+				try {
+					String s = (String)text.getTransferData(DataFlavor.stringFlavor);
+					tf1.setText(s);
+			} catch (Throwable e3) {
+				e3.printStackTrace();
+				}
 			}
 		});
 		CutMenu.addActionListener(new ActionListener() {
