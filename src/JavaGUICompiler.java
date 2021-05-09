@@ -26,13 +26,13 @@ public class JavaGUICompiler extends JFrame {
 	JScrollPane scrollTf1 = new JScrollPane(tf1);
 	JScrollPane scrollTf2 = new JScrollPane(tf2);
 
-//	메뉴바
+	//	메뉴바
 	JMenuBar mb = new JMenuBar();
 	JMenu fileMenu = new JMenu("File");
 	JMenu editMenu = new JMenu("Edit");
 	JMenu compileMenu = new JMenu("Compile");
 
-//	메뉴바 - 메뉴 아이템
+	//	메뉴바 - 메뉴 아이템
 	JFileChooser chooser;
 	JMenuItem NewMenu = new JMenuItem("New");
 	JMenuItem OpenMenu = new JMenuItem("Open");
@@ -61,9 +61,9 @@ public class JavaGUICompiler extends JFrame {
 		this.setSize(500, 500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-//		메뉴바 생성 메소드
+		//		메뉴바 생성 메소드
 		CreateMenuBar();
-//		텍스크 구역 생성 메소드
+		//		텍스크 구역 생성 메소드
 		CreateTextField();
 		this.setVisible(true);
 	}
@@ -93,7 +93,7 @@ public class JavaGUICompiler extends JFrame {
 		compileMenu.add(CompileMenu);
 		compileMenu.add(RunMenu);
 
-//		new메뉴 이벤트 처리
+		//		new메뉴 이벤트 처리
 		NewMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tf1.setText("");
@@ -101,7 +101,7 @@ public class JavaGUICompiler extends JFrame {
 			}
 		});
 
-//		Open메뉴 이벤트 처리
+		//		Open메뉴 이벤트 처리
 		OpenMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chooser = new JFileChooser();
@@ -128,10 +128,10 @@ public class JavaGUICompiler extends JFrame {
 			}
 		});
 
-//		Save 메뉴 이벤트 처리
+		//		Save 메뉴 이벤트 처리
 		SaveMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				상동
+				//				상동
 				chooser = new JFileChooser();
 				chooser.setDialogTitle("Save");
 				int ret = chooser.showOpenDialog(null);
@@ -139,7 +139,7 @@ public class JavaGUICompiler extends JFrame {
 					JOptionPane.showMessageDialog(null, "파일을 선택하지 않았습니다.", "경고!", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-//				Text 파일로 윗부분 텍스트입력 부분 입력된 문자 저장
+				//				Text 파일로 윗부분 텍스트입력 부분 입력된 문자 저장
 				try (FileWriter fw = new FileWriter(chooser.getSelectedFile() + ".txt")) {
 					tf1.write(fw);
 					fw.close();
@@ -149,8 +149,7 @@ public class JavaGUICompiler extends JFrame {
 			}
 		});
 
-//		Exit메뉴 이벤트 처리(오류 남)
-//		Exit인데 Edit인줄 알았네용. Exit는 이렇게 하시면 됩니다~
+		//		Exit메뉴 이벤트 처리
 		ExitMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -158,7 +157,7 @@ public class JavaGUICompiler extends JFrame {
 
 		});
 
-//		Copy메뉴 이벤트 추가
+		//		Copy메뉴 이벤트 추가
 		CopyMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				StringSelection stringSelection = new StringSelection(tf1.getText());
@@ -167,7 +166,7 @@ public class JavaGUICompiler extends JFrame {
 			}
 		});
 
-//		Paste메뉴 이벤트 추가
+		//		Paste메뉴 이벤트 추가
 		PasteMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				c = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -180,15 +179,18 @@ public class JavaGUICompiler extends JFrame {
 				}
 			}
 		});
-
+		//		Cut메뉴 이벤트 추가
 		CutMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				StringSelection StringSelection = new StringSelection(tf1.getText());
+				c = Toolkit.getDefaultToolkit().getSystemClipboard();
+				c.setContents(StringSelection, null);
+				tf1.setText("");
 			}
 		});
 
-//		새로 컴파일 진행시 기존 파일 삭제
-//		클래스 추적 -> 파일명으로 지정
+		//		새로 컴파일 진행시 기존 파일 삭제
+		//		클래스 추적 -> 파일명으로 지정
 		CompileMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try (FileWriter fw = new FileWriter("Hello.java")) {
