@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -7,10 +8,14 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.tools.*;
 
 public class JavaGUICompiler extends JFrame {
 	private static final long serialVersionUID = 1L;
+	public String class_name;
 	StringBuffer buffer;
 	Process process;
 	BufferedReader bufferedReader;
@@ -189,11 +194,22 @@ public class JavaGUICompiler extends JFrame {
 			}
 		});
 
-		//		새로 컴파일 진행시 기존 파일 삭제
-		//		클래스 추적 -> 파일명으로 지정
+//		컴파일 진행시 클래스명 가져와서 파일이름으로 설정 추가
 		CompileMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try (FileWriter fw = new FileWriter("Hello.java")) {
+				tf2.setText("");
+				class_name = tf1.getText();
+//				public class 와 { 사이 클래스 이름 가져오기
+				Pattern pattern = Pattern.compile("(\\bpublic class \\b)(.*?)[ {]");
+				Matcher matcher = pattern.matcher(class_name);
+				if (matcher.find()) {
+					System.out.println(matcher.group(2));
+					class_name = matcher.group(2);
+				} else {
+					tf2.setText("Class 이름 추출 실패");
+					return;
+				}
+				try (FileWriter fw = new FileWriter(class_name + ".java")) {
 					tf1.write(fw);
 					fw.close();
 				} catch (Exception e2) {
@@ -202,7 +218,7 @@ public class JavaGUICompiler extends JFrame {
 				try {
 					String line;
 					InputStream is;
-					is = Runtime.getRuntime().exec("javac Hello.java").getInputStream();
+					is = Runtime.getRuntime().exec("javac " + class_name + ".java").getInputStream();
 					BufferedReader br = new BufferedReader(new InputStreamReader(is, "MS949"));
 					while ((line = br.readLine()) != null) {
 						tf2.setText(line);
@@ -220,7 +236,8 @@ public class JavaGUICompiler extends JFrame {
 				try {
 					String line;
 					InputStream is;
-					is = Runtime.getRuntime().exec("java Hello").getInputStream();
+//					public class, { 사이 클래스 명으로 실행
+					is = Runtime.getRuntime().exec("java " + class_name).getInputStream();
 					BufferedReader br = new BufferedReader(new InputStreamReader(is, "MS949"));
 					while ((line = br.readLine()) != null) {
 						tf2.setText(line);
