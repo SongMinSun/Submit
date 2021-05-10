@@ -203,7 +203,6 @@ public class JavaGUICompiler extends JFrame {
 				Pattern pattern = Pattern.compile("(\\bpublic class \\b)(.*?)[ {]");
 				Matcher matcher = pattern.matcher(class_name);
 				if (matcher.find()) {
-					System.out.println(matcher.group(2));
 					class_name = matcher.group(2);
 				} else {
 					tf2.setText("Class 이름 추출 실패");
