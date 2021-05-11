@@ -42,6 +42,7 @@ public class JavaGUICompiler extends JFrame {
 	JMenuItem NewMenu = new JMenuItem("New");
 	JMenuItem OpenMenu = new JMenuItem("Open");
 	JMenuItem SaveMenu = new JMenuItem("Save");
+	JMenuItem CreditMenu = new JMenuItem("Credits");
 	JMenuItem ExitMenu = new JMenuItem("Exit");
 
 	JMenuItem CopyMenu = new JMenuItem("Copy");
@@ -154,6 +155,12 @@ public class JavaGUICompiler extends JFrame {
 			}
 		});
 
+		CreditMenu.addActionListener(new ActionListener () {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
 		//		Exit메뉴 이벤트 처리
 		ExitMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
