@@ -516,6 +516,7 @@ public class JavaGUICompiler extends JFrame {
 					is = Runtime.getRuntime().exec("javac " + class_name + ".java").getInputStream();
 					BufferedReader br = new BufferedReader(new InputStreamReader(is, "MS949"));
 					while ((line = br.readLine()) != null) {
+						tf2.append("컴파일 중");
 					}
 					tf2.append(line);
 					tf2.append("컴파일 완료");
